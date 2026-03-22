@@ -18,7 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RespParserTest {
 
     private RespParser parserFor(String input) {
-        return new RespParser(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        return new RespParser(
+                new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)),
+                10 * 1024 * 1024
+        );
     }
 
     @Test
@@ -170,7 +173,7 @@ class RespParserTest {
         inputBytes[inputBytes.length - 2] = '\r';
         inputBytes[inputBytes.length - 1] = '\n';
 
-        RespParser parser = new RespParser(new ByteArrayInputStream(inputBytes));
+        RespParser parser = new RespParser(new ByteArrayInputStream(inputBytes), 10 * 1024 * 1024);
         RespType result = parser.parse();
 
         assertInstanceOf(RespType.BulkString.class, result);

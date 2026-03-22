@@ -82,7 +82,7 @@ public final class NitroServer implements Closeable {
                 clientSocket.setKeepAlive(true);
 
                 long connId = connectionCount.incrementAndGet();
-                executor.submit(new ClientHandler(clientSocket, dispatcher));
+                executor.submit(new ClientHandler(clientSocket, dispatcher, config));
 
             } catch (IOException e) {
                 if (running.get()) {
